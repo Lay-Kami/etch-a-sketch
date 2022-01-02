@@ -49,6 +49,7 @@ function makeDraw(e) {
 }
 
 function stopDraw(e) {
+  const blocks = document.querySelectorAll('.in-block');
   let blocksLength = blocks.length;
   for (let k = blocksLength - 1; k >= 0; k--) {
     blocks[k].removeEventListener('mouseover', makeDraw);
@@ -57,10 +58,10 @@ function stopDraw(e) {
 };
 
 function resumeDraw(e) {
+  const blocks = document.querySelectorAll('.in-block');
   blocks.forEach((block) => {
     block.addEventListener('mouseover', makeDraw);
   });
-  e.stopPropagation();
 }
 
 //only block event
@@ -72,6 +73,7 @@ blocks.forEach((block) => {
 
 //set reset btn
 function resetDraw() {
+  const blocks = document.querySelectorAll('.in-block');
   let blocksLength = blocks.length;
   for (let k = blocksLength - 1; k >= 0; k--) {
     blocks[k].style.backgroundColor = 'transparent'
@@ -84,7 +86,13 @@ btnReset.addEventListener('click', resetDraw);
 //set new grid from user
 btnGrid.addEventListener('click', () => {
   removeGrid();
-  makeGrid();
+  makeGrid().forEach((block) => {
+    block.addEventListener('mouseover', makeDraw);
+    block.addEventListener('click', stopDraw);
+    block.addEventListener('dblclick', resumeDraw);
+  });
+  const btnReset = document.querySelector('button');
+  btnReset.addEventListener('click', resetDraw); 
 });
 
 function removeGrid() {
