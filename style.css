@@ -54,6 +54,7 @@ div {
 button {
   width: 5rem;
   height: 1.8rem;
+  margin: 0 1rem;
   margin-top: 1rem;
   background-color: transparent;
   border-radius: .4rem;
@@ -75,3 +76,8 @@ button:hover {
   border: 1px solid #eee;
   box-shadow: 0px 0px 0px 1px black;
 }
+
+.btn {
+  /* outline: auto; */
+}
+

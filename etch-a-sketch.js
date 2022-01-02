@@ -1,44 +1,48 @@
 //get user number Input
-function getUserNumber() {
-  let userInput;
+const btnGrid = document.querySelector('button#grid-size');
+
+function getUserGrid() {
+  let userChoice;
   do {
-  userInput = parseInt(prompt('type your grid lenght: ', ''));
- } while (userInput < 1 || userInput > 100);
-  return  userInput;
+    userChoice = parseInt(prompt('type between 1 and 100: ', ''));
+ } while (userChoice < 1 || userChoice > 100);
+ return userChoice;
 }
+//dont return, only objects
 
 //make grid and return inBlock squares nodeList
-function makeGrid(number) {
-  const outBlock = document.querySelector('.out-block');
-  const inBlock = document.querySelector('.in-block');
-  const sketchBoard = document.querySelector('.sketch-board');
+function makeGrid(number = getUserGrid()) {
+  const outBlock = document.querySelector('div.out-block');
+  const inBlock = document.querySelector('div.in-block');
+  const sketchBoard = document.querySelector('div.sketch-board');
 
   let outBlockClone;
-
-  for (let i = 0; i < number ; i++) {
+  for (let i = 0; i < number - 1; i++) {
     outBlockClone = outBlock.cloneNode(true);
+    outBlockClone.classList.add('clone');
     sketchBoard.insertAdjacentElement('beforeend', outBlockClone);
   }
   
-  let outBlockGroup = document.querySelectorAll('.out-block');
-  let inBlockClone;
-    
+  const outBlockGroup = document.querySelectorAll('.out-block');
+  
+  let inBlockClone;  
   outBlockGroup.forEach((eachBlock) => {
-    for (let j = 0; j < number; j++) {
+    for (let j = 0; j < number - 1; j++) {
       inBlockClone = inBlock.cloneNode(true);
+      inBlockClone.classList.add('clone');
       eachBlock.insertAdjacentElement("beforeend", inBlockClone);
     }  
   });
 
-  let inBlockGroup = document.querySelectorAll('.in-block');
-
+  const inBlockGroup = document.querySelectorAll('.in-block');
   return inBlockGroup;
 }
 
+//invoke
+const blocks = makeGrid(); //nodelist of 36 elements
+
 //set drawing event
 //main hover event
-const blocks = makeGrid(10); //nodelist of 36 elements
-
 function makeDraw(e) {
   this.style.backgroundColor = 'red';
   e.stopPropagation();
@@ -64,10 +68,9 @@ blocks.forEach((block) => {
   block.addEventListener('mouseover', makeDraw);
   block.addEventListener('click', stopDraw);
   block.addEventListener('dblclick', resumeDraw);
-});
+}); 
 
 //set reset btn
-
 function resetDraw() {
   let blocksLength = blocks.length;
   for (let k = blocksLength - 1; k >= 0; k--) {
@@ -76,7 +79,19 @@ function resetDraw() {
   }
 }
 const btnReset = document.querySelector('button');
-btnReset.addEventListener('click', resetDraw);
+btnReset.addEventListener('click', resetDraw); 
 
+//set new grid from user
+btnGrid.addEventListener('click', () => {
+  removeGrid();
+  makeGrid();
+});
 
+function removeGrid() {
+  const blocks = document.querySelectorAll('div.clone');
+  blocks.forEach((block) => {
+    block.remove();
+  });
+}
 
+//grab consts and use inside function
