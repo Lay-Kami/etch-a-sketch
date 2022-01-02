@@ -32,21 +32,51 @@ function makeGrid(number) {
 
   let inBlockGroup = document.querySelectorAll('.in-block');
 
-  return inBlockGroup
+  return inBlockGroup;
 }
 
-//add hover event on the squares
-const blocks = makeGrid(40); //nodelist of 36 elements
+//set drawing event
+//main hover event
+const blocks = makeGrid(10); //nodelist of 36 elements
 
+function makeDraw(e) {
+  this.style.backgroundColor = 'red';
+  e.stopPropagation();
+}
+
+function stopDraw(e) {
+  let blocksLength = blocks.length;
+  for (let k = blocksLength - 1; k >= 0; k--) {
+    blocks[k].removeEventListener('mouseover', makeDraw);
+  }
+  e.stopPropagation();
+};
+
+function resumeDraw(e) {
+  blocks.forEach((block) => {
+    block.addEventListener('mouseover', makeDraw);
+  });
+  e.stopPropagation();
+}
+
+//only block event
 blocks.forEach((block) => {
-  block.addEventListener('mouseover', (e) => {
-    block.style.backgroundColor = 'blue';
-  })
+  block.addEventListener('mouseover', makeDraw);
+  block.addEventListener('click', stopDraw);
+  block.addEventListener('dblclick', resumeDraw);
 });
 
+//set reset btn
 
-
-
+function resetDraw() {
+  let blocksLength = blocks.length;
+  for (let k = blocksLength - 1; k >= 0; k--) {
+    blocks[k].style.backgroundColor = 'transparent'
+    blocks[k].addEventListener('mouseover', makeDraw);
+  }
+}
+const btnReset = document.querySelector('button');
+btnReset.addEventListener('click', resetDraw);
 
 
 

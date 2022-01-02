@@ -18,6 +18,7 @@ div {
   height: 100%;
   width: 100%;
   display: flex;
+  flex-flow: column;
   align-items: center;
   justify-content: center;
 }
@@ -25,10 +26,10 @@ div {
 .sketch-board {
   height: 400px;
   width: 400px;
-  border: 2px dashed #242424;
-
+  border: 1px solid #242424;
   display: flex;
   flex-flow: row wrap;
+  flex: 0 0 1;
 }
 
 .out-block {
@@ -37,7 +38,6 @@ div {
   width: auto;
   margin: 0;
   padding: 0;
-  outline: gray dashed .5px;
   display: flex;
   flex-flow: column;
 }
@@ -48,5 +48,30 @@ div {
   width: auto;
   margin: 0;
   padding: 0;
-  outline: gray dashed .5px;
+  outline: gray dashed 1px;
+}
+
+button {
+  width: 5rem;
+  height: 1.8rem;
+  margin-top: 1rem;
+  background-color: transparent;
+  border-radius: .4rem;
+  border: 1px solid #242424;
+  scale: 1.1;
+  box-shadow: 0px 0px 0px 1px black;
+  font-family: monospace;
+  font-size: .8rem;
+}
+
+button:active {
+  scale: 0.90;
+  transition: .7s;
+}
+
+button:hover {
+  background: black;
+  color: #eee;
+  border: 1px solid #eee;
+  box-shadow: 0px 0px 0px 1px black;
 }
