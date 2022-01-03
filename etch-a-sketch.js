@@ -38,8 +38,13 @@ function makeGrid(number = getUserGrid()) {
 
 //set drawing event
 //main hover event
+let hue = 0;
 function makeDraw(e) {
-  this.style.backgroundColor = 'red';
+  hue += 1;
+  if (hue > 360) {
+    hue = 0;
+  }
+  this.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
   e.stopPropagation();
 }
 
@@ -70,10 +75,11 @@ function resetDraw() {
 const btnReset = document.querySelector('button');
 btnReset.addEventListener('click', resetDraw); 
 
-//set new grid from user
+//set grid from user
 const btnGrid = document.querySelector('button#grid-size');
 
 function removeGrid() {
+  resetDraw();
   const blocks = document.querySelectorAll('div.clone');
   blocks.forEach((block) => {
     block.remove();
@@ -93,6 +99,3 @@ function startDraw() {
 
 startDraw();
 btnGrid.addEventListener('click', startDraw);
-
-
-
